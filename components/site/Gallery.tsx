@@ -92,7 +92,7 @@ export default function Gallery({ initialImages, initialHasMore, pageSize }: Gal
             disabled={isLoading}
             className="bg-saswa-red text-white font-bold py-3 px-8 rounded-full hover:bg-saswa-orange transition duration-300 transform hover:scale-105"
           >
-            {isLoading ? 'Loading...' : 'Load More'}
+            {isLoading ? 'Loading... ' : 'Load More'} {isLoading && <span className="animate-spin">&#9696;</span>}
           </button>
         </div>
       )}

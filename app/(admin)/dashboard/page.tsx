@@ -30,6 +30,12 @@ export default async function DashboardPage() {
             Add, edit, or delete resources like newsletters, reports, and blog posts.
           </p>
         </Link>
+        <Link href="/dashboard/gallery" className="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
+          <h2 className="text-2xl font-bold text-saswa-green mb-2">Manage Gallery</h2>
+          <p className="text-gray-700">
+            Add, edit, or delete images in the gallery.
+          </p>
+        </Link>
       </div>
     </div>
   );

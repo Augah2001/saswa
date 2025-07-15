@@ -56,6 +56,29 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Join Our Alliance Section - New Position and Layout */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
+          <div className="md:w-1/2">
+            <Image
+              src="/images/about-us.jpg" // Using an existing image, adjust if a more suitable one exists or is provided
+              alt="Join Our Alliance"
+              width={800}
+              height={500}
+              className="rounded-lg shadow-lg object-cover w-full h-auto"
+            />
+          </div>
+          <div className="md:w-1/2 text-center md:text-left">
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              Becoming a member of the Southern Africa Sex Workers Alliance (SASWA) means joining a powerful regional network dedicated to advocating for the health, human rights, and social justice of sex workers. Your involvement directly strengthens our collective voice, enabling us to push for policy changes, provide essential support services, and combat stigma and discrimination across Southern Africa. Together, we can create a safer, more equitable environment for all sex workers.
+            </p>
+            <Link href="/membership" className="inline-block bg-saswa-blue text-white font-bold py-3 px-8 rounded-full hover:bg-saswa-dark-blue transition duration-300 transform hover:scale-105 mt-6">
+              Join Our Alliance
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Latest Projects */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -92,19 +115,6 @@ export default async function HomePage() {
               View Full Gallery
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section */}
-      <section className="bg-saswa-red text-white text-center py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-6 animate-slide-in-top">Make a Difference</h2>
-          <p className="text-xl max-w-3xl mx-auto mb-8 animate-fade-in">
-            Your support helps us continue our vital work in advocating for the rights and well-being of sex workers across Southern Africa.
-          </p>
-          <Link href="/contact" className="inline-block bg-white text-saswa-red font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300 transform hover:scale-105 animate-fade-in-up">
-            Get Involved
-          </Link>
         </div>
       </section>
     </div>

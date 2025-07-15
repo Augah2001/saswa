@@ -76,7 +76,13 @@ function SubmitButton({ pending }: { pending: boolean }) {
       aria-disabled={pending}
       className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-saswa-red hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saswa-red disabled:opacity-50"
     >
-      {pending ? 'Adding Project...' : 'Add Project'}
+      {pending ? (
+        <>
+          <span className="animate-spin mr-2">&#9696;</span>Adding Project...
+        </>
+      ) : (
+        'Add Project'
+      )}
     </button>
   );
 }

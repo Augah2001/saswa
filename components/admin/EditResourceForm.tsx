@@ -117,7 +117,13 @@ export default function EditResourceForm({ resource, onClose }: EditResourceForm
           aria-disabled={pending}
           className="px-4 py-2 text-sm font-medium text-white bg-saswa-blue rounded-md hover:bg-opacity-90 disabled:opacity-50"
         >
-          {pending ? 'Updating...' : 'Update Resource'}
+          {pending ? (
+            <>
+              <span className="animate-spin mr-2">&#9696;</span>Updating...
+            </>
+          ) : (
+            'Update Resource'
+          )}
         </button>
       </div>
     </form>
