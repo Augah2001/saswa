@@ -1,24 +1,30 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { useFormStatus } from 'react-dom';
-import { createProject } from '@/app/actions';
+import type { Project } from '@prisma/client';
+import { updateProject } from '@/app/actions';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
-export default function ProjectForm() {
+interface EditProjectFormProps {
+  project: Project;
+  onClose: () => void;
+}
+
+export default function EditProjectForm({ project, onClose }: EditProjectFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(formData: FormData) {
     setPending(true);
-    const result = await createProject(formData);
+    const result = await updateProject(project.id, formData);
     setPending(false);
 
     if (result.success) {
-      toast.success('Project created successfully!');
-      formRef.current?.reset();
+      toast.success('Project updated successfully!');
+      onClose();
     } else {
-      toast.error(result.message || 'Failed to create project.');
+      toast.error(result.message || 'Failed to update project.');
     }
   }
 
@@ -33,6 +39,7 @@ export default function ProjectForm() {
             type="text"
             name="title"
             id="title"
+            defaultValue={project.title}
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-saswa-red focus:border-saswa-red"
           />
@@ -45,14 +52,20 @@ export default function ProjectForm() {
             name="description"
             id="description"
             rows={4}
+            defaultValue={project.description}
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-saswa-red focus:border-saswa-red"
           ></textarea>
         </div>
         <div>
           <label htmlFor="image" className="block text-sm font-medium text-gray-700">
-            Image
+            New Image (Optional)
           </label>
+          {project.imagePath && (
+            <div className="mt-2">
+              <Image src={project.imagePath} alt={project.title} width={100} height={100} className="rounded-md" />
+            </div>
+          )}
           <input
             type="file"
             name="image"
@@ -62,21 +75,18 @@ export default function ProjectForm() {
           />
         </div>
       </div>
-      <div className="mt-6">
-        <SubmitButton pending={pending} />
+      <div className="mt-6 flex justify-end space-x-4">
+        <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          aria-disabled={pending}
+          className="px-4 py-2 text-sm font-medium text-white bg-saswa-red rounded-md hover:bg-opacity-90 disabled:opacity-50"
+        >
+          {pending ? 'Updating...' : 'Update Project'}
+        </button>
       </div>
     </form>
-  );
-}
-
-function SubmitButton({ pending }: { pending: boolean }) {
-  return (
-    <button
-      type="submit"
-      aria-disabled={pending}
-      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-saswa-red hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saswa-red disabled:opacity-50"
-    >
-      {pending ? 'Adding Project...' : 'Add Project'}
-    </button>
   );
 }

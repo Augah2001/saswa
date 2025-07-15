@@ -1,26 +1,33 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { createResource } from '@/app/actions';
+import type { Resource } from '@prisma/client';
 import { ResourceType } from '@prisma/client';
+import { updateResource } from '@/app/actions';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 const resourceTypes = Object.values(ResourceType);
 
-export default function ResourceForm() {
+interface EditResourceFormProps {
+  resource: Resource;
+  onClose: () => void;
+}
+
+export default function EditResourceForm({ resource, onClose }: EditResourceFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [pending, setPending] = useState(false);
 
   async function handleSubmit(formData: FormData) {
     setPending(true);
-    const result = await createResource(formData);
+    const result = await updateResource(resource.id, formData);
     setPending(false);
 
     if (result.success) {
-      toast.success('Resource created successfully!');
-      formRef.current?.reset();
+      toast.success('Resource updated successfully!');
+      onClose();
     } else {
-      toast.error(result.message || 'Failed to create resource.');
+      toast.error(result.message || 'Failed to update resource.');
     }
   }
 
@@ -35,6 +42,7 @@ export default function ResourceForm() {
             type="text"
             name="title"
             id="title"
+            defaultValue={resource.title}
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-saswa-blue focus:border-saswa-blue"
           />
@@ -46,6 +54,7 @@ export default function ResourceForm() {
           <select
             name="type"
             id="type"
+            defaultValue={resource.type}
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-saswa-blue focus:border-saswa-blue"
           >
@@ -64,14 +73,16 @@ export default function ResourceForm() {
             name="content"
             id="content"
             rows={4}
+            defaultValue={resource.content}
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-saswa-blue focus:border-saswa-blue"
           ></textarea>
         </div>
         <div>
           <label htmlFor="file" className="block text-sm font-medium text-gray-700">
-            File (Optional)
+            New File (Optional)
           </label>
+          {resource.filePath && <a href={resource.filePath} target="_blank" rel="noopener noreferrer" className="text-sm text-saswa-blue hover:underline">Current File</a>}
           <input
             type="file"
             name="file"
@@ -81,8 +92,13 @@ export default function ResourceForm() {
         </div>
         <div>
           <label htmlFor="image" className="block text-sm font-medium text-gray-700">
-            Image (Optional)
+            New Image (Optional)
           </label>
+          {resource.imagePath && (
+            <div className="mt-2">
+              <Image src={resource.imagePath} alt={resource.title} width={100} height={100} className="rounded-md" />
+            </div>
+          )}
           <input
             type="file"
             name="image"
@@ -92,21 +108,18 @@ export default function ResourceForm() {
           />
         </div>
       </div>
-      <div className="mt-6">
-        <SubmitButton pending={pending} />
+      <div className="mt-6 flex justify-end space-x-4">
+        <button type="button" onClick={onClose} className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          aria-disabled={pending}
+          className="px-4 py-2 text-sm font-medium text-white bg-saswa-blue rounded-md hover:bg-opacity-90 disabled:opacity-50"
+        >
+          {pending ? 'Updating...' : 'Update Resource'}
+        </button>
       </div>
     </form>
-  );
-}
-
-function SubmitButton({ pending }: { pending: boolean }) {
-  return (
-    <button
-      type="submit"
-      aria-disabled={pending}
-      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-saswa-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saswa-blue disabled:opacity-50"
-    >
-      {pending ? 'Adding Resource...' : 'Add Resource'}
-    </button>
   );
 }

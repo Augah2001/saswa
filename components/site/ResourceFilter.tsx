@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { Resource } from '@prisma/client';
 import { ResourceType } from '@prisma/client';
-import Link from 'next/link';
+import ResourceList from './ResourceList';
 
 interface ResourceFilterProps {
   resources: Resource[];
@@ -47,35 +47,7 @@ const ResourceFilter = ({ resources }: ResourceFilterProps) => {
         ))}
       </div>
 
-      {filteredResources.length === 0 ? (
-         <p className="text-center text-gray-600">No resources found for this category.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredResources.map((resource) => (
-            <div key={resource.id} className="bg-white rounded-lg shadow-lg p-6 flex flex-col">
-              <div className="flex-grow">
-                <span className="text-sm bg-saswa-blue text-white py-1 px-3 rounded-full mb-4 inline-block capitalize">
-                  {resource.type.replace('_', ' ').toLowerCase()}
-                </span>
-                <h3 className="text-xl font-bold mb-2">{resource.title}</h3>
-                <p className="text-gray-700 mb-4">{resource.content}</p>
-              </div>
-              {resource.fileUrl && (
-                <div className="mt-4">
-                  <Link
-                    href={resource.fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-saswa-red hover:text-saswa-orange font-semibold"
-                  >
-                    Download File
-                  </Link>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+      <ResourceList resources={filteredResources} />
     </div>
   );
 };
