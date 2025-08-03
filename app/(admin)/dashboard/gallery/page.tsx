@@ -1,16 +1,12 @@
-import prisma from '@/lib/prisma';
 import GalleryImageList from '@/components/admin/GalleryImageList';
 import GalleryImageForm from '@/components/admin/GalleryImageForm';
 
-async function getGalleryImages() {
-  return prisma.galleryImage.findMany({
-    orderBy: { createdAt: 'desc' },
-  });
-}
+const staticImages = [
+  { id: '1', title: 'About Us', imagePath: '/images/about-us.jpg', createdAt: new Date(), updatedAt: new Date() },
+  { id: '2', title: 'Hero Background', imagePath: '/images/hero-bg.jpg', createdAt: new Date(), updatedAt: new Date() },
+];
 
-export default async function GalleryAdminPage() {
-  const images = await getGalleryImages();
-
+export default function GalleryAdminPage() {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-8">Manage Gallery</h1>
@@ -20,7 +16,7 @@ export default async function GalleryAdminPage() {
       </div>
       <div>
         <h2 className="text-2xl font-bold mb-4">Existing Images</h2>
-        <GalleryImageList images={images} />
+        <GalleryImageList images={staticImages} />
       </div>
     </div>
   );

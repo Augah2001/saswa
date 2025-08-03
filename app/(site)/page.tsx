@@ -4,6 +4,8 @@ import Image from 'next/image';
 import LatestProjectList from '@/components/site/LatestProjectList';
 import LatestResourceList from '@/components/site/LatestResourceList';
 import LatestGallery from '@/components/site/LatestGallery';
+import Cover from '@/public/images/WhatsApp Image 2025-07-17 at 11.47.41_841ad545.jpg';
+import Image1 from '@/public/images/WhatsApp Image 2025-07-17 at 11.44.10_84bf2d8a.jpg';
 
 async function getLatestProjects() {
   return prisma.project.findMany({
@@ -34,23 +36,28 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative bg-saswa-red text-white text-center py-20 md:py-32 overflow-hidden">
+      <section className="relative min-h-[600px] bg-saswa-red text-[#cf3636] text-center py-20 md:py-32 overflow-hidden">
         <Image
-          src="/images/hero-bg.jpg"
+          
+          src= {Cover}
           alt="Background"
           layout="fill"
           objectFit="cover"
           quality={100}
+          
           className="absolute inset-0 z-0 opacity-30 animate-fade-in"
         />
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 animate-slide-in-top">
-            Empowering Voices, Defending Rights
+            The Southern Africa Sex Workers Alliance Welcomes you to its Safe Havern
           </h1>
-          <p className="text-lg md:text-xl max-w-3xl mx-auto mb-8 animate-slide-in-bottom">
-            The Southern Africa Sex Workers Alliance (SASWA) is a regional network of sex worker-led organisations advocating for the health and human rights of sex workers.
-          </p>
-          <Link href="/about" className="inline-block bg-white text-saswa-red font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300 transform hover:scale-105 animate-fade-in-up">
+           <div className="bg-black bg-opacity-50 p-4 rounded-lg max-w-3xl mx-auto mb-8 animate-slide-in-bottom">
+            <p className="text-lg font-semibold md:text-xl text-white">
+              The Southern Africa Sex Workers Alliance (SASWA) is a regional network of sex worker-led organisations advocating for the health and human rights of sex workers.
+            </p>
+          </div>
+         
+          <Link href="/about" className="inline-block bg-white text-[#cf3636] font-bold py-3 px-8 rounded-full hover:bg-gray-200 transition duration-300 transform hover:scale-105 animate-fade-in-up">
             Learn More About Us
           </Link>
         </div>
@@ -61,7 +68,7 @@ export default async function HomePage() {
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-1/2">
             <Image
-              src="/images/about-us.jpg" // Using an existing image, adjust if a more suitable one exists or is provided
+              src={Image1} // Using an existing image, adjust if a more suitable one exists or is provided
               alt="Join Our Alliance"
               width={800}
               height={500}

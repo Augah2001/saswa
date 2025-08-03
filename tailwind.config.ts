@@ -55,6 +55,11 @@ const config: Config = {
           '0%': { opacity: '0', transform: 'translateX(10px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
+        float: {
+          '0%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+          '100%': { transform: 'translateY(0px)' },
+        },
       },
       animation: { // Added animations
         'fade-in': 'fadeIn 1s ease-out forwards',
@@ -63,9 +68,16 @@ const config: Config = {
         'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
         'fade-in-left': 'fadeInLeft 0.7s ease-out forwards',
         'fade-in-right': 'fadeInRight 0.7s ease-out forwards',
+        'float': 'float 3s ease-in-out infinite',
+      },
+      textShadow: { // Added textShadow
+        DEFAULT: '0 2px 4px rgba(217, 54, 68, 0.7)',
+        sm: '0 1px 2px rgba(217, 54, 68, 0.6)',
+        md: '0 2px 4px rgba(217, 54, 68, 0.7)',
+        lg: '0 4px 8px rgba(217, 54, 68, 0.8)',
       },
     },
   },
   plugins: [],
-};
-export default config;
+    };
+    export default config;

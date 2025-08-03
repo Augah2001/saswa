@@ -29,9 +29,10 @@ model Project {
 
 enum ResourceType {
   NEWSLETTER
-  BRIEF
+  POLICY_BRIEF
   BLOG
-  FRAMEWORK_REPORT
+  HUMAN_RIGHTS_VIOLATIONS_REPORT
+  REPORT_FOR_SEX_WORKERS
 }
 
 model Resource {

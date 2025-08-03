@@ -6,15 +6,24 @@ import Modal from './Modal';
 import Image from 'next/image';
 import Link from 'next/link';
 
+// Manually define ResourceType enum as we cannot run prisma generate
+enum ResourceType {
+  NEWSLETTER = 'NEWSLETTER',
+  POLICY_BRIEF = 'POLICY_BRIEF',
+  BLOG = 'BLOG',
+  HUMAN_RIGHTS_VIOLATIONS_REPORT = 'HUMAN_RIGHTS_VIOLATIONS_REPORT',
+  REPORT_FOR_SEX_WORKERS = 'REPORT_FOR_SEX_WORKERS',
+}
+
 interface ResourceListProps {
-  resources: Resource[];
+  resources: (Omit<Resource, 'type'> & { type: ResourceType })[];
 }
 
 export default function ResourceList({ resources }: ResourceListProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
+  const [selectedResource, setSelectedResource] = useState<(Omit<Resource, 'type'> & { type: ResourceType }) | null>(null);
 
-  const openModal = (resource: Resource) => {
+  const openModal = (resource: (Omit<Resource, 'type'> & { type: ResourceType })) => {
     setSelectedResource(resource);
     setIsModalOpen(true);
   };
@@ -45,7 +54,7 @@ export default function ResourceList({ resources }: ResourceListProps) {
             )}
             <div className="p-6 flex flex-col flex-grow">
               <h2 className="text-2xl font-bold text-gray-800 mb-2">{resource.title}</h2>
-              <p className="text-sm text-gray-500 capitalize mb-2">{resource.type.replace('_', ' ').toLowerCase()}</p>
+              <p className="text-sm text-gray-500 capitalize mb-2">{resource.type.replace(/_/g, ' ').toLowerCase()}</p>
               <p className="text-gray-700 leading-relaxed flex-grow">
                 {resource.content.substring(0, 150)}...
                 <button onClick={() => openModal(resource)} className="text-saswa-blue hover:underline ml-1 font-semibold">
