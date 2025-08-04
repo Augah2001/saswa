@@ -8,9 +8,10 @@ import Link from 'next/link';
 
 interface LatestProjectListProps {
   projects: Project[];
+  className?: string;
 }
 
-export default function LatestProjectList({ projects }: LatestProjectListProps) {
+export default function LatestProjectList({ projects, className }: LatestProjectListProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -26,7 +27,7 @@ export default function LatestProjectList({ projects }: LatestProjectListProps) 
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${className}`}>
         {projects.map((project) => (
           <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
             {project.imagePath && (

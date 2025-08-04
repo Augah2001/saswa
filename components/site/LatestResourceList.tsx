@@ -8,9 +8,10 @@ import Link from 'next/link';
 
 interface LatestResourceListProps {
   resources: Resource[];
+  className?: string;
 }
 
-export default function LatestResourceList({ resources }: LatestResourceListProps) {
+export default function LatestResourceList({ resources, className }: LatestResourceListProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
 
@@ -26,7 +27,7 @@ export default function LatestResourceList({ resources }: LatestResourceListProp
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${className}`}>
         {resources.map((resource) => (
           <div key={resource.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
             {resource.imagePath && (

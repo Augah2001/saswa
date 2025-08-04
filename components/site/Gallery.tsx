@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import Image from 'next/image';
 import { getPaginatedGalleryImages } from '@/app/actions';
+import Carousel from './Carousel'; // Import the Carousel component
 
 interface GalleryProps {
   initialImages: GalleryImage[];
@@ -59,6 +60,8 @@ export default function Gallery({ initialImages, initialHasMore, pageSize }: Gal
     return acc;
   }, {});
 
+  const initialCarouselIndex = selectedImage ? loadedImages.findIndex(img => img.id === selectedImage.id) : 0;
+
   return (
     <>
       {Object.entries(groupedImages).map(([monthYear, imagesInGroup]) => (
@@ -100,12 +103,18 @@ export default function Gallery({ initialImages, initialHasMore, pageSize }: Gal
       {selectedImage && (
         <Modal isOpen={isModalOpen} onClose={closeModal} title={selectedImage.title}>
           <div className="relative w-full h-[80vh]">
-            <Image
-              src={selectedImage.imagePath}
-              alt={selectedImage.title}
-              layout="fill"
-              objectFit="contain"
-            />
+            <Carousel initialIndex={initialCarouselIndex}>
+              {loadedImages.map((image) => (
+                <div key={image.id} className="relative w-full h-[80vh]">
+                  <Image
+                    src={image.imagePath}
+                    alt={image.title}
+                    layout="fill"
+                    objectFit="contain"
+                  />
+                </div>
+              ))}
+            </Carousel>
           </div>
         </Modal>
       )}

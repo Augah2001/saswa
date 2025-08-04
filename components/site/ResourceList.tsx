@@ -17,9 +17,10 @@ enum ResourceType {
 
 interface ResourceListProps {
   resources: (Omit<Resource, 'type'> & { type: ResourceType })[];
+  className?: string;
 }
 
-export default function ResourceList({ resources }: ResourceListProps) {
+export default function ResourceList({ resources, className }: ResourceListProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedResource, setSelectedResource] = useState<(Omit<Resource, 'type'> & { type: ResourceType }) | null>(null);
 
@@ -39,7 +40,7 @@ export default function ResourceList({ resources }: ResourceListProps) {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${className}`}>
         {resources.map((resource) => (
           <div key={resource.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
             {resource.imagePath && (

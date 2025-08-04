@@ -1,3 +1,4 @@
+'use client';
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -6,6 +7,7 @@ import LatestResourceList from '@/components/site/LatestResourceList';
 import LatestGallery from '@/components/site/LatestGallery';
 import Cover from '@/public/images/WhatsApp Image 2025-07-17 at 11.47.41_841ad545.jpg';
 import Image1 from '@/public/images/WhatsApp Image 2025-07-17 at 11.44.10_84bf2d8a.jpg';
+import useInViewAnimation from '@/hooks/useInViewAnimation';
 
 async function getLatestProjects() {
   return prisma.project.findMany({
@@ -32,6 +34,11 @@ export default async function HomePage() {
   const latestProjects = await getLatestProjects();
   const latestResources = await getLatestResources();
   const latestGalleryImages = await getLatestGalleryImages();
+
+  const { ref: joinAllianceRef, isInView: joinAllianceInView } = useInViewAnimation();
+  const { ref: projectsRef, isInView: projectsInView } = useInViewAnimation();
+  const { ref: resourcesRef, isInView: resourcesInView } = useInViewAnimation();
+  const { ref: galleryRef, isInView: galleryInView } = useInViewAnimation();
 
   return (
     <div>
@@ -64,9 +71,9 @@ export default async function HomePage() {
       </section>
 
       {/* Join Our Alliance Section - New Position and Layout */}
-      <section className="py-16 bg-white">
+      <section ref={joinAllianceRef} className={`py-16 bg-white transition-opacity duration-700 ${joinAllianceInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
-          <div className="md:w-1/2">
+          <div className={`md:w-1/2 ${joinAllianceInView ? 'animate-fade-in-left' : ''}`}>
             <Image
               src={Image1} // Using an existing image, adjust if a more suitable one exists or is provided
               alt="Join Our Alliance"
@@ -75,7 +82,7 @@ export default async function HomePage() {
               className="rounded-lg shadow-lg object-cover w-full h-auto"
             />
           </div>
-          <div className="md:w-1/2 text-center md:text-left">
+          <div className={`md:w-1/2 text-center md:text-left ${joinAllianceInView ? 'animate-fade-in-right' : ''}`}>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
               Becoming a member of the Southern Africa Sex Workers Alliance (SASWA) means joining a powerful regional network dedicated to advocating for the health, human rights, and social justice of sex workers. Your involvement directly strengthens our collective voice, enabling us to push for policy changes, provide essential support services, and combat stigma and discrimination across Southern Africa. Together, we can create a safer, more equitable environment for all sex workers.
             </p>
@@ -87,10 +94,10 @@ export default async function HomePage() {
       </section>
 
       {/* Latest Projects */}
-      <section className="py-16 bg-gray-50">
+      <section ref={projectsRef} className={`py-16 bg-gray-50 transition-opacity duration-700 ${projectsInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-saswa-red">Our Latest Projects</h2>
-          <LatestProjectList projects={latestProjects} />
+          <LatestProjectList projects={latestProjects} className={projectsInView ? 'animate-fade-in-up' : ''} />
            <div className="text-center mt-12">
               <Link href="/projects" className="bg-saswa-red text-white font-bold py-3 px-8 rounded-full hover:bg-saswa-orange transition duration-300 transform hover:scale-105">
                 View All Projects
@@ -100,10 +107,10 @@ export default async function HomePage() {
       </section>
 
       {/* Latest Resources */}
-      <section className="bg-white py-16">
+      <section ref={resourcesRef} className={`bg-white py-16 transition-opacity duration-700 ${resourcesInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-saswa-red">Recent Resources</h2>
-          <LatestResourceList resources={latestResources} />
+          <LatestResourceList resources={latestResources} className={resourcesInView ? 'animate-fade-in-up' : ''} />
            <div className="text-center mt-12">
               <Link href="/resources" className="bg-saswa-red text-white font-bold py-3 px-8 rounded-full hover:bg-saswa-orange transition duration-300 transform hover:scale-105">
                 View All Resources
@@ -113,10 +120,10 @@ export default async function HomePage() {
       </section>
 
       {/* Gallery Section */}
-      <section className="py-16 bg-gray-50">
+      <section ref={galleryRef} className={`py-16 bg-gray-50 transition-opacity duration-700 ${galleryInView ? 'opacity-100' : 'opacity-0'}`}>
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-saswa-red">From Our Gallery</h2>
-          <LatestGallery images={latestGalleryImages} />
+          <LatestGallery images={latestGalleryImages} className={galleryInView ? 'animate-fade-in-up' : ''} />
           <div className="text-center mt-12">
             <Link href="/gallery" className="bg-saswa-red text-white font-bold py-3 px-8 rounded-full hover:bg-saswa-orange transition duration-300 transform hover:scale-105">
               View Full Gallery

@@ -16,6 +16,7 @@ enum ResourceType {
 
 interface ResourceFilterProps {
   resources: (Omit<Resource, 'type'> & { type: ResourceType })[];
+  className?: string;
 }
 
 const resourceTypes = Object.values(ResourceType);
@@ -28,7 +29,7 @@ const typeDisplayNames: Record<ResourceType, string> = {
   [ResourceType.REPORT_FOR_SEX_WORKERS]: 'Reports for Sex Workers',
 };
 
-function ResourceFilterContent({ resources }: ResourceFilterProps) {
+function ResourceFilterContent({ resources, className }: ResourceFilterProps) {
   const searchParams = useSearchParams();
   const typeParam = searchParams.get('type');
 
@@ -51,7 +52,7 @@ function ResourceFilterContent({ resources }: ResourceFilterProps) {
       : resources.filter((resource) => resource.type === selectedType);
 
   return (
-    <div>
+    <div className={className}>
       <div className="flex justify-center flex-wrap gap-4 mb-8">
         <button
           onClick={() => setSelectedType('ALL')}
@@ -78,7 +79,7 @@ function ResourceFilterContent({ resources }: ResourceFilterProps) {
         ))}
       </div>
 
-      <ResourceList resources={filteredResources} />
+      <ResourceList resources={filteredResources} className={className} />
     </div>
   );
 }
