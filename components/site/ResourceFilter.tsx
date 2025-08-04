@@ -1,25 +1,14 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, forwardRef } from 'react';
 import { useSearchParams } from 'next/navigation';
-import type { Resource } from '@prisma/client';
+import { ResourceType, type Resource } from '@prisma/client';
 import ResourceList from './ResourceList';
-
-// Manually define ResourceType enum as we cannot run prisma generate
-enum ResourceType {
-  NEWSLETTER = 'NEWSLETTER',
-  POLICY_BRIEF = 'POLICY_BRIEF',
-  BLOG = 'BLOG',
-  HUMAN_RIGHTS_VIOLATIONS_REPORT = 'HUMAN_RIGHTS_VIOLATIONS_REPORT',
-  REPORT_FOR_SEX_WORKERS = 'REPORT_FOR_SEX_WORKERS',
-}
 
 interface ResourceFilterProps {
   resources: (Omit<Resource, 'type'> & { type: ResourceType })[];
   className?: string;
 }
-
-const resourceTypes = Object.values(ResourceType);
 
 const typeDisplayNames: Record<ResourceType, string> = {
   [ResourceType.NEWSLETTER]: 'Newsletters',
@@ -27,24 +16,14 @@ const typeDisplayNames: Record<ResourceType, string> = {
   [ResourceType.BLOG]: 'Blogs',
   [ResourceType.HUMAN_RIGHTS_VIOLATIONS_REPORT]: 'Human Rights Violations Reports',
   [ResourceType.REPORT_FOR_SEX_WORKERS]: 'Reports for Sex Workers',
+  [ResourceType.BRIEF]: 'Briefs',
+  [ResourceType.FRAMEWORK_REPORT]: 'Framework Reports',
 };
 
-function ResourceFilterContent({ resources, className }: ResourceFilterProps) {
-  const searchParams = useSearchParams();
-  const typeParam = searchParams.get('type');
+const resourceTypes = Object.keys(typeDisplayNames) as ResourceType[];
 
-  const getInitialType = () => {
-    if (typeParam && resourceTypes.includes(typeParam as ResourceType)) {
-      return typeParam as ResourceType;
-    }
-    return 'ALL';
-  };
-
-  const [selectedType, setSelectedType] = useState<ResourceType | 'ALL'>(getInitialType);
-
-  useEffect(() => {
-    setSelectedType(getInitialType());
-  }, [typeParam]);
+const ResourceFilterContent = forwardRef<HTMLDivElement, ResourceFilterProps>(({ resources, className }, ref) => {
+  const [selectedType, setSelectedType] = useState<ResourceType | 'ALL'>('ALL');
 
   const filteredResources =
     selectedType === 'ALL'
@@ -52,7 +31,7 @@ function ResourceFilterContent({ resources, className }: ResourceFilterProps) {
       : resources.filter((resource) => resource.type === selectedType);
 
   return (
-    <div className={className}>
+    <div ref={ref} className={className}>
       <div className="flex justify-center flex-wrap gap-4 mb-8">
         <button
           onClick={() => setSelectedType('ALL')}
@@ -79,10 +58,10 @@ function ResourceFilterContent({ resources, className }: ResourceFilterProps) {
         ))}
       </div>
 
-      <ResourceList resources={filteredResources} className={className} />
+      <ResourceList ref={ref} resources={filteredResources} className={className} />
     </div>
   );
-}
+});
 
 const ResourceFilter = (props: ResourceFilterProps) => (
   <Suspense fallback={<div>Loading...</div>}>

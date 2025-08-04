@@ -1,30 +1,21 @@
 'use client';
 
-import type { Resource } from '@prisma/client';
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import Modal from './Modal';
 import Image from 'next/image';
 import Link from 'next/link';
-
-// Manually define ResourceType enum as we cannot run prisma generate
-enum ResourceType {
-  NEWSLETTER = 'NEWSLETTER',
-  POLICY_BRIEF = 'POLICY_BRIEF',
-  BLOG = 'BLOG',
-  HUMAN_RIGHTS_VIOLATIONS_REPORT = 'HUMAN_RIGHTS_VIOLATIONS_REPORT',
-  REPORT_FOR_SEX_WORKERS = 'REPORT_FOR_SEX_WORKERS',
-}
+import type { Resource } from '@prisma/client';
 
 interface ResourceListProps {
-  resources: (Omit<Resource, 'type'> & { type: ResourceType })[];
+  resources: Resource[];
   className?: string;
 }
 
-export default function ResourceList({ resources, className }: ResourceListProps) {
+const ResourceList = forwardRef<HTMLDivElement, ResourceListProps>(({ resources, className }, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedResource, setSelectedResource] = useState<(Omit<Resource, 'type'> & { type: ResourceType }) | null>(null);
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
 
-  const openModal = (resource: (Omit<Resource, 'type'> & { type: ResourceType })) => {
+  const openModal = (resource: Resource) => {
     setSelectedResource(resource);
     setIsModalOpen(true);
   };
@@ -40,7 +31,7 @@ export default function ResourceList({ resources, className }: ResourceListProps
 
   return (
     <>
-      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${className}`}>
+      <div ref={ref} className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${className}`}>
         {resources.map((resource) => (
           <div key={resource.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
             {resource.imagePath && (
@@ -97,4 +88,8 @@ export default function ResourceList({ resources, className }: ResourceListProps
       )}
     </>
   );
-}
+});
+
+ResourceList.displayName = 'ResourceList';
+
+export default ResourceList;

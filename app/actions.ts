@@ -265,3 +265,11 @@ export async function getPaginatedGalleryImages(page: number, pageSize: number) 
     take: pageSize,
   });
 }
+export async function getGalleryImages() {
+  console.log(await prisma.galleryImage.findMany({
+    orderBy: { createdAt: 'desc' }
+  }))
+  return prisma.galleryImage.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
+}

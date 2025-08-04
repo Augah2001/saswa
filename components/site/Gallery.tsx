@@ -4,9 +4,9 @@ import type { GalleryImage } from '@prisma/client';
 import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import Image from 'next/image';
-import { getPaginatedGalleryImages } from '@/app/actions';
+import { getPaginatedGalleryImages, deleteGalleryImage } from '@/app/actions'; // Import deleteGalleryImage
 import Carousel from './Carousel'; // Import the Carousel component
-
+import { usePathname } from 'next/navigation';
 interface GalleryProps {
   initialImages: GalleryImage[];
   initialHasMore: boolean;
@@ -14,10 +14,19 @@ interface GalleryProps {
 }
 
 export default function Gallery({ initialImages, initialHasMore, pageSize }: GalleryProps) {
+  const pathname = usePathname();
+ 
   const [loadedImages, setLoadedImages] = useState<GalleryImage[]>(initialImages);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(initialHasMore);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Update loadedImages and hasMore when initial props change (due to revalidation)
+  useEffect(() => {
+    setLoadedImages(initialImages);
+    setHasMore(initialHasMore);
+    setCurrentPage(1); // Reset page when initial images change
+  }, [initialImages, initialHasMore]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
@@ -30,6 +39,24 @@ export default function Gallery({ initialImages, initialHasMore, pageSize }: Gal
   const closeModal = () => {
     setSelectedImage(null);
     setIsModalOpen(false);
+  };
+
+  const handleDelete = async (id: string, event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent opening the modal when deleting
+    if (window.confirm('Are you sure you want to delete this image?')) {
+      try {
+        const result = await deleteGalleryImage(id);
+        if (result.success) {
+          // The revalidatePath in deleteGalleryImage will handle the update
+        } else {
+          // Optionally, show an error toast
+          console.error('Failed to delete image:', result.message);
+        }
+      } catch (error) {
+        console.error('Error deleting image:', error);
+        // Optionally, show an error toast
+      }
+    }
   };
 
   const loadMoreImages = async () => {
@@ -66,7 +93,7 @@ export default function Gallery({ initialImages, initialHasMore, pageSize }: Gal
     <>
       {Object.entries(groupedImages).map(([monthYear, imagesInGroup]) => (
         <div key={monthYear} className="mb-8">
-          <h2 className="text-2xl font-bold text-saswa-red mb-4 mt-8 first:mt-0">{monthYear}</h2>
+          {pathname !== '/dashboard/gallery' && <h2 className="text-2xl font-bold text-saswa-red mb-4 mt-8 first:mt-0">{monthYear}</h2>}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {imagesInGroup.map((image) => (
               <div key={image.id} className="relative group overflow-hidden rounded-lg cursor-pointer" onClick={() => openModal(image)}>
@@ -82,6 +109,17 @@ export default function Gallery({ initialImages, initialHasMore, pageSize }: Gal
                   <h3 className="font-bold">{image.title}</h3>
                   <p className="text-sm">{new Date(image.createdAt).toLocaleDateString()}</p>
                 </div>
+                {pathname === '/dashboard/gallery' && (
+                  <button
+                    onClick={(e) => handleDelete(image.id, e)}
+                    className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                    title="Delete Image"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm6 0a1 1 0 11-2 0v6a1 1 0 112 0V8z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -111,6 +149,7 @@ export default function Gallery({ initialImages, initialHasMore, pageSize }: Gal
                     alt={image.title}
                     layout="fill"
                     objectFit="contain"
+                    onError={(e) => console.error("Error loading modal image in Gallery.tsx:", image.imagePath, e)}
                   />
                 </div>
               ))}

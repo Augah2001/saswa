@@ -1,20 +1,20 @@
 'use client';
-import type { Metadata } from 'next';
-import { FaFilePdf } from 'react-icons/fa';
-import useInViewAnimation from '@/hooks/useInViewAnimation';
 
-export const metadata: Metadata = {
+import { FaFilePdf } from 'react-icons/fa';
+import { useInViewAnimation } from '@/hooks/useInViewAnimation';
+
+const metadata = {
   title: 'Membership - SASWA',
   description: 'Join SASWA. Download our membership application forms in English or Portuguese.',
 };
 
 const MembershipPage = () => {
-  const { ref: mainContentRef, isInView: mainContentInView } = useInViewAnimation();
-  const { ref: aboutRef, isInView: aboutInView } = useInViewAnimation();
-  const { ref: membersRef, isInView: membersInView } = useInViewAnimation();
-  const { ref: howToRef, isInView: howToInView } = useInViewAnimation();
-  const { ref: formsRef, isInView: formsInView } = useInViewAnimation();
-  const { ref: contactRef, isInView: contactInView } = useInViewAnimation();
+  const { ref: mainContentRef, isInView: mainContentInView } = useInViewAnimation<HTMLDivElement>();
+  const { ref: aboutRef, isInView: aboutInView } = useInViewAnimation<HTMLDivElement>();
+  const { ref: membersRef, isInView: membersInView } = useInViewAnimation<HTMLDivElement>();
+  const { ref: howToRef, isInView: howToInView } = useInViewAnimation<HTMLDivElement>();
+  const { ref: formsRef, isInView: formsInView } = useInViewAnimation<HTMLDivElement>();
+  const { ref: contactRef, isInView: contactInView } = useInViewAnimation<HTMLDivElement>();
 
   return (
     <div className="container mx-auto px-4 py-16">

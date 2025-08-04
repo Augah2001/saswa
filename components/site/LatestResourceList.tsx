@@ -1,7 +1,7 @@
 'use client';
 
 import type { Resource } from '@prisma/client';
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import Modal from './Modal';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,7 +11,7 @@ interface LatestResourceListProps {
   className?: string;
 }
 
-export default function LatestResourceList({ resources, className }: LatestResourceListProps) {
+const LatestResourceList = forwardRef<HTMLDivElement, LatestResourceListProps>(({ resources, className }, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
 
@@ -27,7 +27,7 @@ export default function LatestResourceList({ resources, className }: LatestResou
 
   return (
     <>
-      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${className}`}>
+      <div ref={ref} className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${className}`}>
         {resources.map((resource) => (
           <div key={resource.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
             {resource.imagePath && (
@@ -84,4 +84,8 @@ export default function LatestResourceList({ resources, className }: LatestResou
       )}
     </>
   );
-}
+});
+
+LatestResourceList.displayName = 'LatestResourceList';
+
+export default LatestResourceList;

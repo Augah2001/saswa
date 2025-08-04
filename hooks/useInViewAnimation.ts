@@ -1,41 +1,37 @@
 'use client';
 
-'use client';
-
-'use client';
-
-'use client';
-
 import { useEffect, useRef, useState } from 'react';
 
-const useInViewAnimation = (threshold = 0.1) => {
-  const ref = useRef<HTMLElement>(null);
+export const useInViewAnimation = <T extends HTMLElement>() => {
+  const ref = useRef<T>(null);
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
+    const currentRef = ref.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
-          // Optionally, unobserve after it's in view to only animate once
-          observer.unobserve(entry.target);
+          observer.disconnect();
         }
       },
-      { threshold }
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1,
+      }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
-  }, [threshold]);
+  }, []);
 
   return { ref, isInView };
 };
-
-export default useInViewAnimation;

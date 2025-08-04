@@ -33,6 +33,8 @@ enum ResourceType {
   BLOG
   HUMAN_RIGHTS_VIOLATIONS_REPORT
   REPORT_FOR_SEX_WORKERS
+  BRIEF
+  FRAMEWORK_REPORT
 }
 
 model Resource {

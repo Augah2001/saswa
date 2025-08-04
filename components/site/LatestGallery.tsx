@@ -1,7 +1,7 @@
 'use client';
 
 import type { GalleryImage } from '@prisma/client';
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import Modal from './Modal';
 import Image from 'next/image';
 import Carousel from './Carousel'; // Import the Carousel component
@@ -11,7 +11,7 @@ interface LatestGalleryProps {
   className?: string;
 }
 
-export default function LatestGallery({ images, className }: LatestGalleryProps) {
+const LatestGallery = forwardRef<HTMLDivElement, LatestGalleryProps>(({ images, className }, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
@@ -27,7 +27,7 @@ export default function LatestGallery({ images, className }: LatestGalleryProps)
 
   return (
     <>
-      <Carousel className={className}>
+      <Carousel ref={ref} className={className}>
         {images.map((image) => (
           <div key={image.id} className="relative group overflow-hidden rounded-lg cursor-pointer w-full h-64" onClick={() => openModal(image)}>
             <Image
@@ -54,10 +54,15 @@ export default function LatestGallery({ images, className }: LatestGalleryProps)
               alt={selectedImage.title}
               layout="fill"
               objectFit="contain"
+              onError={(e) => console.error("Error loading modal image:", selectedImage.imagePath, e)}
             />
           </div>
         </Modal>
       )}
     </>
   );
-}
+});
+
+LatestGallery.displayName = 'LatestGallery';
+
+export default LatestGallery;

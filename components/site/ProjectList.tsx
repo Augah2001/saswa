@@ -1,7 +1,7 @@
 'use client';
 
 import type { Project } from '@prisma/client';
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import Modal from './Modal';
 import Image from 'next/image';
 
@@ -10,7 +10,7 @@ interface ProjectListProps {
   className?: string;
 }
 
-export default function ProjectList({ projects, className }: ProjectListProps) {
+const ProjectList = forwardRef<HTMLDivElement, ProjectListProps>(({ projects, className }, ref) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
@@ -30,7 +30,7 @@ export default function ProjectList({ projects, className }: ProjectListProps) {
 
   return (
     <>
-      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${className}`}>
+      <div ref={ref} className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${className}`}>
         {projects.map((project) => (
           <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
             {project.imagePath && (
@@ -81,4 +81,8 @@ export default function ProjectList({ projects, className }: ProjectListProps) {
       )}
     </>
   );
-}
+});
+
+ProjectList.displayName = 'ProjectList';
+
+export default ProjectList;
