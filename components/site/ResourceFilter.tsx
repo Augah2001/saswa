@@ -16,8 +16,6 @@ const typeDisplayNames: Record<ResourceType, string> = {
   [ResourceType.BLOG]: 'Blogs',
   [ResourceType.HUMAN_RIGHTS_VIOLATIONS_REPORT]: 'Human Rights Violations Reports',
   [ResourceType.REPORT_FOR_SEX_WORKERS]: 'Reports for Sex Workers',
-  [ResourceType.BRIEF]: 'Briefs',
-  [ResourceType.FRAMEWORK_REPORT]: 'Framework Reports',
 };
 
 const resourceTypes = Object.keys(typeDisplayNames) as ResourceType[];
