@@ -6,6 +6,7 @@ import { ResourceType } from '@prisma/client';
 import { updateResource } from '@/app/actions';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
+import { ScaleLoader } from 'react-spinners';
 
 const resourceTypes = Object.values(ResourceType);
 
@@ -115,11 +116,11 @@ export default function EditResourceForm({ resource, onClose }: EditResourceForm
         <button
           type="submit"
           aria-disabled={pending}
-          className="px-4 py-2 text-sm font-medium text-white bg-saswa-blue rounded-md hover:bg-opacity-90 disabled:opacity-50"
+          className="px-4 py-2 text-sm h-10 font-medium text-white bg-saswa-blue rounded-md hover:bg-opacity-90 disabled:opacity-50"
         >
           {pending ? (
             <>
-              <span className="animate-spin mr-2">&#9696;</span>Updating...
+              <ScaleLoader height={14} color="#fff" className="mr-2" />Uploading...
             </>
           ) : (
             'Update Resource'

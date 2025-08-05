@@ -1,17 +1,16 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { createGalleryImages } from '@/app/actions';
 import toast from 'react-hot-toast';
+import { useFormStatus } from 'react-dom';
+import { ScaleLoader, SyncLoader} from 'react-spinners';
 
 export default function GalleryImageForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [pending, setPending] = useState(false);
 
   async function handleSubmit(formData: FormData) {
-    setPending(true);
     const result = await createGalleryImages(formData);
-    setPending(false);
 
     if (result.success) {
       toast.success('Images uploaded successfully!');
@@ -52,20 +51,28 @@ export default function GalleryImageForm() {
         </div>
       </div>
       <div className="mt-6">
-        <button
-          type="submit"
-          aria-disabled={pending}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-saswa-red hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saswa-red disabled:opacity-50"
-        >
-          {pending ? (
-            <>
-              <span className="animate-spin mr-2">&#9696;</span>Uploading...
-            </>
-          ) : (
-            'Upload Images'
-          )}
-        </button>
+        <SubmitButton />
       </div>
     </form>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      aria-disabled={pending}
+      className="w-full flex justify-center items-center h-10 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-saswa-red hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saswa-red disabled:opacity-50"
+    >
+      {pending ? (
+        <>
+              <ScaleLoader height={14} color="#fff" className="mr-2" />Uploading...
+            </>
+      ) : (
+        'Upload Images'
+      )}
+    </button>
   );
 }

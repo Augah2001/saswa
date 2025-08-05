@@ -1,18 +1,18 @@
 'use client';
 
+'use client';
+
 import { useRef, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { createProject } from '@/app/actions';
 import toast from 'react-hot-toast';
+import { ScaleLoader } from 'react-spinners';
 
 export default function ProjectForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [pending, setPending] = useState(false);
 
   async function handleSubmit(formData: FormData) {
-    setPending(true);
     const result = await createProject(formData);
-    setPending(false);
 
     if (result.success) {
       toast.success('Project created successfully!');
@@ -63,23 +63,25 @@ export default function ProjectForm() {
         </div>
       </div>
       <div className="mt-6">
-        <SubmitButton pending={pending} />
+        <SubmitButton />
       </div>
     </form>
   );
 }
 
-function SubmitButton({ pending }: { pending: boolean }) {
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
   return (
     <button
       type="submit"
       aria-disabled={pending}
-      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-saswa-red hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saswa-red disabled:opacity-50"
+      className="w-full h-10 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-saswa-red hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saswa-red disabled:opacity-50"
     >
       {pending ? (
-        <>
-          <span className="animate-spin mr-2">&#9696;</span>Adding Project...
-        </>
+      <>
+              <ScaleLoader height={14} color="#fff" className="mr-2" />Uploading...
+            </>
       ) : (
         'Add Project'
       )}

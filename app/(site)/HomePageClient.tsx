@@ -105,7 +105,7 @@ export default function HomePageClient({
 
       {/* Gallery Section */}
       <section ref={galleryRef} className={`py-16 bg-gray-50 transition-opacity duration-700 ${galleryInView ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="container mx-auto px-4">
+        <div className="container max-w-[700px] mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-saswa-red">From Our Gallery</h2>
           <LatestGallery images={latestGalleryImages} className={galleryInView ? 'animate-fade-in-up' : ''} />
           <div className="text-center mt-12">

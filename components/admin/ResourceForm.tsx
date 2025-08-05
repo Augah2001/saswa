@@ -4,17 +4,16 @@ import { useRef, useState } from 'react';
 import { createResource } from '@/app/actions';
 import { ResourceType } from '@prisma/client';
 import toast from 'react-hot-toast';
+import { useFormStatus } from 'react-dom';
+import { ScaleLoader } from 'react-spinners';
 
 const resourceTypes = Object.values(ResourceType);
 
 export default function ResourceForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [pending, setPending] = useState(false);
 
   async function handleSubmit(formData: FormData) {
-    setPending(true);
     const result = await createResource(formData);
-    setPending(false);
 
     if (result.success) {
       toast.success('Resource created successfully!');
@@ -93,23 +92,25 @@ export default function ResourceForm() {
         </div>
       </div>
       <div className="mt-6">
-        <SubmitButton pending={pending} />
+        <SubmitButton />
       </div>
     </form>
   );
 }
 
-function SubmitButton({ pending }: { pending: boolean }) {
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
   return (
     <button
       type="submit"
       aria-disabled={pending}
-      className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-saswa-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saswa-blue disabled:opacity-50"
+      className="w-full flex h-10 justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-saswa-blue hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-saswa-blue disabled:opacity-50"
     >
       {pending ? (
-        <>
-          <span className="animate-spin mr-2">&#9696;</span>Adding Resource...
-        </>
+       <>
+              <ScaleLoader height={14} color="#fff" className="mr-2" />Uploading...
+            </>
       ) : (
         'Add Resource'
       )}

@@ -5,6 +5,7 @@ import type { Project } from '@prisma/client';
 import { updateProject } from '@/app/actions';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
+import { ScaleLoader } from 'react-spinners';
 
 interface EditProjectFormProps {
   project: Project;
@@ -82,11 +83,11 @@ export default function EditProjectForm({ project, onClose }: EditProjectFormPro
         <button
           type="submit"
           aria-disabled={pending}
-          className="px-4 py-2 text-sm font-medium text-white bg-saswa-red rounded-md hover:bg-opacity-90 disabled:opacity-50"
+          className="px-4 py-2 h-10 text-sm font-medium text-white bg-saswa-red rounded-md hover:bg-opacity-90 disabled:opacity-50"
         >
           {pending ? (
             <>
-              <span className="animate-spin mr-2">&#9696;</span>Updating...
+              <ScaleLoader height={14} color="#fff" className="mr-2" />Uploading...
             </>
           ) : (
             'Update Project'
