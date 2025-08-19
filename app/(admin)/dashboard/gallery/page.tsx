@@ -18,15 +18,17 @@ export default async function GalleryAdminPage() {
   const totalImagesCount = await prisma.galleryImage.count();
   const hasMore = initialImages.length < totalImagesCount;
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-8">Manage Gallery</h1>
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Upload New Images</h2>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Manage Gallery</h1>
+      
+      <div className="mb-8 bg-white p-4 md:p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-saswa-green mb-4">Upload New Image</h2>
         <GalleryImageForm />
       </div>
-      <div>
-        <h2 className="text-2xl font-bold mb-4">Existing Images</h2>
-        <Gallery initialImages={initialImages} initialHasMore={hasMore} pageSize={INITIAL_PAGE_SIZE} />
+
+      <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-saswa-green mb-4">Existing Images</h2>
+        <GalleryImageList images={initialImages} />
       </div>
     </div>
   );

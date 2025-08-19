@@ -17,12 +17,12 @@ export default async function ManageResourcesPage() {
     <div>
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Manage Resources</h1>
       
-      <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
+      <div className="mb-8 bg-white p-4 md:p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-saswa-blue mb-4">Add New Resource</h2>
         <ResourceForm />
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="bg-white p-4 md:p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-saswa-blue mb-4">Existing Resources</h2>
         <ResourceList resources={resources} />
       </div>
