@@ -24,21 +24,28 @@ const MembershipPage = () => {
         <section ref={aboutRef} className={`mb-8 text-center transition-opacity duration-700 ${aboutInView ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`}>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">About Our Membership</h2>
           <p className="text-gray-700 leading-relaxed">
-            [Placeholder for information about SASWA membership]
+            SASWA’s Membership is constituted and only limited to Southern Africa. 80% of SASWAs membership should be sex worker led organizations, 20% can be any other key population organizations, individual sex worker activists and allies. Members are recruited by the SASWA working group through an application process.
           </p>
         </section>
 
         <section ref={membersRef} className={`mb-8 text-center transition-opacity duration-700 ${membersInView ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`}>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Our Members</h2>
-          <p className="text-gray-700 leading-relaxed">
-            [Placeholder for number of members and their logos]
+          <p className="text-gray-700 leading-relaxed mb-4">
+            Our members are the core of our alliance. Below is a list of our current member organizations.
           </p>
+          <ul className="list-disc list-inside text-gray-700 leading-relaxed text-left">
+            <li>Womens Rights Association ADM Angola</li>
+            <li>Sisonke South Africa</li>
+            <li>Zambia Sex Workers Alliance (ZASWA)</li>
+            <li>Female Sex Workers Association of Malawi (FISWA)</li>
+            {/* Developer Note: Add other members as provided. Logos will be supplied later. */}
+          </ul>
         </section>
 
         <section ref={howToRef} className={`mb-8 text-center transition-opacity duration-700 ${howToInView ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`}>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">How to Become a Member</h2>
           <p className="text-gray-700 leading-relaxed">
-            To become a member, please download the application form, fill it out, and email it to us.
+            To become a member, please download the application form, fill it out, and email it to us. All completed forms must be emailed to <a href="mailto:southernafricasexworkersallian@gmail.com" className="text-saswa-blue hover:underline">southernafricasexworkersallian@gmail.com</a> with a copy sent to <a href="mailto:leeroy.saswacoordinator@gmail.com" className="text-saswa-blue hover:underline">leeroy.saswacoordinator@gmail.com</a>.
           </p>
         </section>
 
@@ -50,7 +57,7 @@ const MembershipPage = () => {
 
           <div className="flex flex-col md:flex-row justify-center items-center gap-8">
             <a 
-              href="/forms/SASWA_Membership_Form_EN.pdf" 
+              href="/forms/SASWA_Membership_en.docx" 
               download 
               className="flex items-center gap-3 bg-saswa-green text-white font-bold py-3 px-6 rounded-full hover:bg-opacity-90 transition duration-300"
             >
@@ -58,21 +65,19 @@ const MembershipPage = () => {
               <span>Download Form (English)</span>
             </a>
             
-            <a 
-              href="/forms/SASWA_Membership_Form_PT.pdf" 
-              download 
-              className="flex items-center gap-3 bg-saswa-orange text-white font-bold py-3 px-6 rounded-full hover:bg-opacity-90 transition duration-300"
+            <div 
+              className="flex items-center gap-3 bg-gray-400 text-white font-bold py-3 px-6 rounded-full cursor-not-allowed"
             >
               <FaFilePdf size={24} />
-              <span>Download Form (Portuguese)</span>
-            </a>
+              <span>Form (Portuguese) - Pending Translation</span>
+            </div>
           </div>
         </section>
 
         <section ref={contactRef} className={`text-center transition-opacity duration-700 ${contactInView ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`}>
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Contact Information</h2>
           <p className="text-gray-700 leading-relaxed">
-            For any questions regarding membership, please contact us at: <a href="mailto:membership@saswa.org" className="text-saswa-blue hover:underline">membership@saswa.org</a>
+            For any questions regarding membership, please contact us at: <a href="mailto:southernafricasexworkersallian@gmail.com" className="text-saswa-blue hover:underline">southernafricasexworkersallian@gmail.com</a>
           </p>
         </section>
       </div>

@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   const email = 'admin@saswa.org';
-  const password = 'password123'; // Use a strong password in production
+  const password = 'password123'; // Use a strong password in production 
 
   // Check if user already exists
   const existingUser = await prisma.user.findUnique({

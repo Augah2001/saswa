@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FaFacebook, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -24,14 +24,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Connect With Us</h3>
             <div className="flex space-x-4">
-              <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-saswa-blue">
+              <a href="https://www.facebook.com/share/14Fy6w57z2A/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-saswa-blue">
                 <FaFacebook size={24} />
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-saswa-blue">
-                <FaTwitter size={24} />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-saswa-blue">
-                <FaYoutube size={24} />
+              <a href="https://www.instagram.com/saswa_2021?igsh=bXh6YmNjZDF2bzMz&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-saswa-blue">
+                <FaInstagram size={24} />
               </a>
             </div>
           </div>
