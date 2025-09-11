@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   title: "SASWA",
   description: "Southern Africa Sex Workers Alliance",
   icons: {
-    icon: '/favicon.ico',
+    icon: '/icon.ico',
+    shortcut: '/icon.ico',
+    apple: '/icon.ico',
   },
 };
 
