@@ -1,7 +1,19 @@
 'use client';
 
+import Image from 'next/image';
 import { FaFilePdf } from 'react-icons/fa';
 import { useInViewAnimation } from '@/hooks/useInViewAnimation';
+import adultGLam   from '@/public/logos/Adult-Glam-Divas-AGD-LOGO.jpeg'
+import bread from '@/public/logos/Bread of Our Lives LOGO-1.jpg'
+import equal_rights from '@/public/logos/Equal Rights for All Movement ERAM LOGO.png'
+import FSWA from '@/public/logos/FSWA LOGO.jpg'
+import pow from '@/public/logos/Pow Wow Logo.jpeg'
+import sgdzt from '@/public/logos/SGDZT-LOGO2.jpeg'
+import shez from '@/public/logos/SHEZ LOGO SHEZ FINAL.jpg'
+import sisonke from '@/public/logos/Sisonke logo .jpg'
+import spring from '@/public/logos/Spring of Life Zimbabwe.jpg'
+import zaswa from '@/public/logos/ZASWA_KPAZ Logo.jpg'
+
 
 const metadata = {
   title: 'Membership - SASWA',
@@ -33,13 +45,48 @@ const MembershipPage = () => {
           <p className="text-gray-700 leading-relaxed mb-4">
             Our members are the core of our alliance. Below is a list of our current member organizations.
           </p>
-          <ul className="list-disc list-inside text-gray-700 leading-relaxed text-left">
-            <li>Womens Rights Association ADM Angola</li>
-            <li>Sisonke South Africa</li>
-            <li>Zambia Sex Workers Alliance (ZASWA)</li>
-            <li>Female Sex Workers Association of Malawi (FISWA)</li>
-            {/* Developer Note: Add other members as provided. Logos will be supplied later. */}
-          </ul>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-8">
+            <div className="flex flex-col items-center">
+              <Image src={sisonke} alt="Sisonke South Africa Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Sisonke South Africa</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image src={bread} alt="Bread of Our Lives ESwatini Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Bread of Our Lives ESwatini</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image src={pow} alt="Pow Wow Bulawayo Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Pow Wow Bulawayo</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image src={zaswa} alt="Zambia Sex Workers Alliance: ZASWA Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Zambia Sex Workers Alliance: ZASWA</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image src={adultGLam} alt="Adult Glam Divas Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Adult Glam Divas</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image src={spring} alt="Springs of Life Zimbabwe Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Springs of Life Zimbabwe</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image src={shez} alt="Sisterhood for Health Equality Trust Zambia: SHEZ Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Sisterhood for Health Equality Trust Zambia: SHEZ</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image src={equal_rights} alt="Equal Rights for All Movement ERAM Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Equal Rights for All Movement ERAM</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image src={sgdzt} alt="Space for marginalized groups in Diversity: SGDZT Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Space for marginalized groups in Diversity: SGDZT</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image src={FSWA} alt="Female Sex Workers Association of Malawi: FISWA Logo" width={96} height={96} className="object-contain mb-2" />
+              <p className="text-sm text-gray-600 text-center">Female Sex Workers Association of Malawi: FISWA</p>
+            </div>
+          </div>
         </section>
 
         <section ref={howToRef} className={`mb-8 text-center transition-opacity duration-700 ${howToInView ? 'opacity-100 animate-fade-in-up' : 'opacity-0'}`}>
@@ -69,7 +116,7 @@ const MembershipPage = () => {
               className="flex items-center gap-3 bg-gray-400 text-white font-bold py-3 px-6 rounded-full cursor-not-allowed"
             >
               <FaFilePdf size={24} />
-              <span>Form (Portuguese) - Pending Translation</span>
+              <span>Form (Portuguese) </span>
             </div>
           </div>
         </section>
