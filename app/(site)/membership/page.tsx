@@ -112,12 +112,14 @@ const MembershipPage = () => {
               <span>Download Form (English)</span>
             </a>
             
-            <div 
-              className="flex items-center gap-3 bg-gray-400 text-white font-bold py-3 px-6 rounded-full cursor-not-allowed"
+            <a 
+              href="/forms/SASWA_Membership_portuguese.docx" 
+              download 
+              className="flex items-center gap-3 bg-saswa-green text-white font-bold py-3 px-6 rounded-full hover:bg-opacity-90 transition duration-300"
             >
               <FaFilePdf size={24} />
-              <span>Form (Portuguese) </span>
-            </div>
+              <span>Download Form (Portuguese)</span>
+            </a>
           </div>
         </section>
 
